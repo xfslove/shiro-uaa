@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.xfslove.autoconfigure.shiro.OAuth2ResourceShiroAutoConfiguration,\
+  com.github.xfslove.autoconfigure.shiro.OAuth2ResourceFilterAutoConfiguration,\
+  com.github.xfslove.autoconfigure.shiro.OAuth2ResourceEndpointAutoConfiguration
+

@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.github.xfslove</groupId>
+    <artifactId>shiro-uaa</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <version>1.0.0-SNAPSHOT</version>
+  <artifactId>shiro-uaa-common</artifactId>
+  <packaging>jar</packaging>
+  <name>Shiro-UAA Auth Common</name>
+  <description>Shiro-UAA Common</description>
+  <url>https://github.com/xfslove/shiro-uaa</url>
+
+  <properties>
+    <commons-lang3.version>3.4</commons-lang3.version>
+    <shiro.version>1.4.0</shiro.version>
+    <oauth.version>1.0.2</oauth.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-spring-boot-web-starter</artifactId>
+      <version>${shiro.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons-lang3.version}</version>
+    </dependency>
+
+    <!-- oauth2 -->
+    <dependency>
+      <groupId>org.apache.oltu.oauth2</groupId>
+      <artifactId>org.apache.oltu.oauth2.client</artifactId>
+      <version>${oauth.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.oltu.oauth2</groupId>
+      <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
+      <version>${oauth.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.oltu.oauth2</groupId>
+      <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
+      <version>${oauth.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.oltu.oauth2</groupId>
+      <artifactId>org.apache.oltu.oauth2.common</artifactId>
+      <version>${oauth.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.nimbusds</groupId>
+      <artifactId>nimbus-jose-jwt</artifactId>
+      <version>5.2</version>
+    </dependency>
+  </dependencies>
+
+</project>

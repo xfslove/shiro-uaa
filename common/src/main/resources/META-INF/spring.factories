@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.xfslove.autoconfigure.shiro.ShiroFilterAutoConfiguration,\
+  com.github.xfslove.autoconfigure.shiro.ShiroAutoConfiguration,\
+  com.github.xfslove.autoconfigure.shiro.ShiroStatelessAutoConfiguration,\
+  com.github.xfslove.autoconfigure.shiro.ShiroAnnotationAutoConfiguration
