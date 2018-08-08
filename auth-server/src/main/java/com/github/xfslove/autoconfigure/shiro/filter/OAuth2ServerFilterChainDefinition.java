@@ -28,6 +28,6 @@ public class OAuth2ServerFilterChainDefinition implements CustomFilterChainDefin
 
   @Override
   public int getOrder() {
-    return HIGHEST_PRECEDENCE;
+    return LOWEST_PRECEDENCE;
   }
 }

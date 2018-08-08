@@ -2,7 +2,6 @@ package com.github.xfslove.autoconfigure.shiro.endpoint;
 
 import com.github.xfslove.autoconfigure.shiro.model.Constants;
 import com.github.xfslove.autoconfigure.shiro.utils.OAuthParamsClientRequest;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
 import org.apache.oltu.oauth2.common.OAuth;
 import org.apache.shiro.SecurityUtils;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -37,17 +35,9 @@ public class LogoutEndpoint {
 
   @RequestMapping(value = "", method = RequestMethod.GET)
   public void logout(
-      HttpServletRequest request,
       HttpServletResponse response,
-      @RequestParam(value = OAuth.OAUTH_REDIRECT_URI, required = false) String redirectUrl
+      @RequestParam(value = OAuth.OAUTH_REDIRECT_URI) String redirectUrl
   ) throws Exception {
-    if (StringUtils.isBlank(redirectUrl)) {
-      redirectUrl = request.getRequestURL().toString();
-      if (StringUtils.isNotBlank(request.getQueryString())) {
-        redirectUrl += "?" + request.getQueryString();
-      }
-    }
-
     String notifyUrl = UriComponentsBuilder.newInstance()
         .scheme(serverScheme)
         .host(serverHost)

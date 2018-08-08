@@ -14,7 +14,7 @@ public class OAuth2ResourceProperties {
 
   private int serverPort;
 
-  private String serverContextPath;
+  private String serverContextPath = "";
 
   private String clientId;
 

@@ -148,10 +148,9 @@ public class UaaAccessTokenEndpoint {
     Account account = accountService.getByUsername(accessToken.getUsername());
 
     Map<String, Object> claims = jwt.getClaims();
-    claims.put(Constants.ACCOUNT_ID, account.getId());
     claims.put(Constants.ACCESS_TOKEN, accessToken.getAccessToken());
     claims.put(Constants.REFRESH_TOKEN, accessToken.getRefreshToken());
-    claims.put(Constants.PERM_CODE, roleService.getPermCodes(accessToken.getClientId(), account.getId()));
+    claims.put(Constants.PERM_CODE, roleService.getPermCodes(accessToken.getClientId(), account.getUsername()));
 
     return jwt;
   }

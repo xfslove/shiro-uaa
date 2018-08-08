@@ -7,5 +7,5 @@ import java.util.Set;
  */
 public interface RoleService {
 
-  Set<String> getPermCodes(String clientId, Long accountId);
+  Set<String> getPermCodes(String clientId, String username);
 }

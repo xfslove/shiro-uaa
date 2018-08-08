@@ -76,7 +76,7 @@ public class UaaAuthorizeEndpoint {
         return modelAndView;
       }
 
-      modelAndView.setViewName("redirect:" + loginUrl);
+      modelAndView.setViewName("forward:" + loginUrl);
       return modelAndView;
     } catch (OAuthProblemException e) {
       OAuthResponse resp = OAuthASResponse
