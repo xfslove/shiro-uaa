@@ -112,6 +112,10 @@ A Simple User Account and Authentication (UAA) Server base on Shiro.
   | shiro.uaa.resource.clientSecret      | UAA分配的ClientSecret   |
   | shiro.logoutUrl                      | Resource Server登出地址 |
 
+#### 例子
+
+[**shiro-uaa-samples**](https://github.com/xfslove/shiro-uaa-samples)
+
 #### Lincense
 
 [*Apache 2.0 license*](license).
