@@ -6,7 +6,7 @@ A Simple User Account and Authentication (UAA) Server base on Shiro.
 
 ### 来源
 
-当刚开始一个项目时，相信Shiro的简便会成为大多数开发者权限框架的首选，但当项目扩展后，从1到n，并且需要统一认证和授权时，Shiro本身并不支持统一认证和授权成为了限制，Shiro有CasFilter，但是Cas并不容易统一管理授权，所以有了Shiro-UAA
+当刚开始一个项目时，相信Shiro的简便会成为大多数开发者权限框架的首选，但当项目扩展后，从1到n，并且需要统一认证和授权时，Shiro本身并不支持统一认证和授权成为了限制，Shiro有CasFilter，但是Cas又是另外一套框架，较为重，为了能使认证授权服务更简单，易用，所以有了Shiro-UAA
 
 ### 为什么用 shiro-uaa
 
