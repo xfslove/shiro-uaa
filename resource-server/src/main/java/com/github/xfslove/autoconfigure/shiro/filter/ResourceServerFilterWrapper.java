@@ -5,7 +5,7 @@ import javax.servlet.Filter;
 /**
  * Created by hanwen on 2017/10/10.
  */
-public class OAuth2ResourceFilterWrapper implements CustomFilterWrapper {
+public class ResourceServerFilterWrapper implements CustomFilterWrapper {
 
   private String serverScheme;
 
@@ -21,7 +21,7 @@ public class OAuth2ResourceFilterWrapper implements CustomFilterWrapper {
 
   @Override
   public Filter getFilter() {
-    OAuth2ResourceFilter filter = new OAuth2ResourceFilter();
+    ResourceServerFilter filter = new ResourceServerFilter();
     filter.setServerScheme(serverScheme);
     filter.setServerHost(serverHost);
     filter.setServerPort(serverPort);

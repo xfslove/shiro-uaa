@@ -1,9 +1,7 @@
 package com.github.xfslove.autoconfigure.shiro.filter;
 
-import org.apache.commons.collections.CollectionUtils;
-
 import javax.servlet.Filter;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,13 +11,9 @@ import java.util.Map;
  */
 public class ModularCustomFilter {
 
-  private List<CustomFilterWrapper> filterWrappers;
+  private List<CustomFilterWrapper> filterWrappers = new ArrayList<>();
 
   public Map<String, Filter> getFilters() {
-    if (CollectionUtils.isEmpty(filterWrappers)) {
-      return Collections.emptyMap();
-    }
-
     Map<String, Filter> filterMap = new HashMap<>();
 
     for (CustomFilterWrapper filterWrapper : filterWrappers) {

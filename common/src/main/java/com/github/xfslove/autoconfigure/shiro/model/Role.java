@@ -16,7 +16,7 @@ public class Role implements Serializable {
    */
   private String name;
 
-  private boolean enabled;
+  private boolean enabled = true;
 
   /**
    * 角色的授权码, 和shiro的stringPermission相关

@@ -1,11 +1,13 @@
 package com.github.xfslove.autoconfigure.shiro.service;
 
-import java.util.Set;
+import com.github.xfslove.autoconfigure.shiro.model.Role;
 
 /**
  * Created by hanwen on 2017/6/12.
  */
 public interface RoleService {
 
-  Set<String> getPermCodes(String clientId, String username);
+  Role getById(Long id);
+
+  Role getByName(String name);
 }

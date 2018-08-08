@@ -2,7 +2,7 @@
 
 
 
-A Simple User Account and Authentication (UAA) Server base on Shiro.
+A lightweight User Account and Authentication (UAA) Server base on Shiro.
 
 ### 来源
 
@@ -10,11 +10,13 @@ A Simple User Account and Authentication (UAA) Server base on Shiro.
 
 ### 为什么用 shiro-uaa
 
-- 单独的 UAA Server
+- 无状态 UAA Server
 - 纯粹的 Shiro
-- 简单，容易扩展
+- 学习简单
+- 容易扩展
+- 开箱即用
 
-#### 授权流程
+#### 认证授权流程
 
 ![map.png](map.png)
 
@@ -45,17 +47,17 @@ A Simple User Account and Authentication (UAA) Server base on Shiro.
 
   ##### 可扩展api
 
-  | 接口名              | 说明            |
-  | ------------------- | --------------- |
-  | AccessClientService | 接入系统服务    |
-  | AccessTokenService  | AccessToken服务 |
-  | AccountService      | 用户服务        |
-  | AuthCodeService     | Code服务        |
-  | RoleService         | 角色服务        |
+  | 接口名              | 说明             |
+  | ------------------- | ---------------- |
+  | AccessClientService | 接入系统服务     |
+  | AccessTokenService  | access-token服务 |
+  | AccountService      | 用户服务         |
+  | AuthCodeService     | code服务         |
+  | RoleService         | 角色服务         |
 
-  ##### Login
+  ##### login
 
-  自定义Login页面和登录验证，implement `org.apache.shiro.authc.credential.CredentialsMatcher` ，实现登录时的校验逻辑
+  自定义Login页面和登录验证，implement `org.apache.shiro.authc.credential.CredentialsMatcher` ，实现登录时的校验逻辑，配置`shiro.loginUrl`
 
   ##### 扩展的配置参数
 
@@ -80,13 +82,13 @@ A Simple User Account and Authentication (UAA) Server base on Shiro.
   </dependency>
   ```
 
-  ##### FilterChainDefinition
+  ##### filterChainDefinition
 
   implement `com.github.xfslove.autoconfigure.shiro.filter.CustomFilterChainDefinition` ，定义不同的path经过不同的Filter
 
-  ##### Logout
+  ##### logout
 
-  先从Resource Server登出，再从UAA登出，加载`com.github.xfslove.autoconfigure.shiro.endpoint.LogoutEndpoint`
+  先从Resource Server登出，再从UAA登出，配置`shiro.logoutUrl`参数加载`com.github.xfslove.autoconfigure.shiro.endpoint.LogoutEndpoint`
 
   ##### 注解
 
@@ -111,6 +113,10 @@ A Simple User Account and Authentication (UAA) Server base on Shiro.
   | shiro.uaa.resource.clientId          | UAA分配的ClientId       |
   | shiro.uaa.resource.clientSecret      | UAA分配的ClientSecret   |
   | shiro.logoutUrl                      | Resource Server登出地址 |
+
+#### TODO
+
+- 提供auth-server可部署服务
 
 #### 例子
 

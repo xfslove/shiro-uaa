@@ -9,19 +9,19 @@ import java.util.LinkedHashMap;
 /**
  * Created by hanwen on 2017/9/20.
  */
-public class OAuth2ServerFilterChainDefinition implements CustomFilterChainDefinition {
+public class AuthServerFilterChainDefinition implements CustomFilterChainDefinition {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2ServerFilterChainDefinition.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(AuthServerFilterChainDefinition.class);
 
   @Override
   public LinkedHashMap<String, String> getFilterChainMap() {
     LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 
     filterChainDefinitionMap.put(Constants.SERVER_AUTH_PATH + "/**", "anon");
-    filterChainDefinitionMap.put(Constants.SERVER_RESOURCE_PATH + "/**", "oauth-server");
+//    filterChainDefinitionMap.put(Constants.SERVER_RESOURCE_PATH + "/**", "oauth-server");
 
     LOGGER.info("uaa auth-server filter chain definition: {} {}", Constants.SERVER_AUTH_PATH + "/**", "anon");
-    LOGGER.info("uaa auth-server filter chain definition: {} {}", Constants.SERVER_RESOURCE_PATH + "/**", "oauth-server");
+//    LOGGER.info("uaa auth-server filter chain definition: {} {}", Constants.SERVER_RESOURCE_PATH + "/**", "oauth-server");
 
     return filterChainDefinitionMap;
   }

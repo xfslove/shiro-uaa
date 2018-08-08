@@ -7,15 +7,16 @@ import javax.servlet.Filter;
 /**
  * Created by hanwen on 2017/10/10.
  */
-public class OAuth2ServerFilterWrapper implements CustomFilterWrapper {
+public class AuthServerFilterWrapper implements CustomFilterWrapper {
 
   private AccessTokenService accessTokenService;
 
   @Override
   public Filter getFilter() {
-    OAuth2ServerFilter oAuth2ServerFilter = new OAuth2ServerFilter();
-    oAuth2ServerFilter.setAccessTokenService(accessTokenService);
-    return oAuth2ServerFilter;
+//    AuthServerFilter oAuth2ServerFilter = new AuthServerFilter();
+////    oAuth2ServerFilter.setAccessTokenService(accessTokenService);
+////    return oAuth2ServerFilter;
+    return null;
   }
 
   @Override

@@ -1,6 +1,7 @@
 package com.github.xfslove.autoconfigure.shiro.endpoint;
 
 import com.github.xfslove.autoconfigure.shiro.model.AccessClient;
+import com.github.xfslove.autoconfigure.shiro.model.Account;
 import com.github.xfslove.autoconfigure.shiro.model.AuthCode;
 import com.github.xfslove.autoconfigure.shiro.model.Constants;
 import com.github.xfslove.autoconfigure.shiro.service.AccessClientService;
@@ -121,10 +122,10 @@ public class UaaAuthorizeEndpoint {
       AuthCode authCode = new AuthCode();
       authCode.setSessionId((String) subject.getSession(false).getId());
       authCode.setCode(new OAuthIssuerImpl(new UUIDValueGenerator()).authorizationCode());
-      authCode.setUsername((String) subject.getPrincipals().getPrimaryPrincipal());
+      Account account = (Account) subject.getPrincipals().asList().get(1);
+      authCode.setAccountId(account.getId());
       authCode.setExpires(new Date(System.currentTimeMillis() + 1000L * codeExpires));
-      authCode.setClientId(accessClient.getClientId());
-      authCode.setClientSecret(accessClient.getClientSecret());
+      authCode.setAccessClientId(accessClient.getId());
       authCodeService.save(authCode);
 
       OAuthResponse resp = OAuthASResponse
@@ -134,7 +135,7 @@ public class UaaAuthorizeEndpoint {
           .buildQueryMessage();
       String redirectUrl = resp.getLocationUri();
 
-      LOGGER.info("UAA SERVER INFO : {} get auth_code success from server, issued client_id:[{}], redirect to {}", authCode.getUsername(), accessClient.getClientId(), redirectUrl);
+      LOGGER.info("UAA SERVER INFO : {} get auth_code success from server, issued client_id:[{}], redirect to {}", account.getUsername(), accessClient.getClientId(), redirectUrl);
       response.sendRedirect(redirectUrl);
     } catch (OAuthProblemException ex) {
       OAuthResponse resp = OAuthASResponse

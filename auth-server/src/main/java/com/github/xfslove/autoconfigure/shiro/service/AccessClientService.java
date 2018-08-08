@@ -7,5 +7,7 @@ import com.github.xfslove.autoconfigure.shiro.model.AccessClient;
  */
 public interface AccessClientService {
 
+  AccessClient getById(Long id);
+
   AccessClient getByClient(String clientId);
 }

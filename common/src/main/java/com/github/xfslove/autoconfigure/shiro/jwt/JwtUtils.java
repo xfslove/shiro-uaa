@@ -1,5 +1,6 @@
 package com.github.xfslove.autoconfigure.shiro.jwt;
 
+import com.github.xfslove.autoconfigure.shiro.exception.OAuth2AuthenticationException;
 import com.github.xfslove.autoconfigure.shiro.model.Jwt;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
@@ -8,7 +9,6 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import com.github.xfslove.autoconfigure.shiro.exception.OAuth2AuthenticationException;
 import net.minidev.json.JSONArray;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
@@ -58,9 +58,8 @@ public class JwtUtils {
       return signedJwt.serialize();
     } catch (JOSEException e) {
       LOGGER.error(ExceptionUtils.getStackTrace(e));
+      throw new OAuth2AuthenticationException("json web token parse error", e);
     }
-
-    return null;
   }
 
   public static Jwt parse(String jwtString, String clientSecret, String... claimFields) {
@@ -105,8 +104,7 @@ public class JwtUtils {
       return jwt;
     } catch (Exception e) {
       LOGGER.error(ExceptionUtils.getStackTrace(e));
+      throw new OAuth2AuthenticationException("json web token parse error", e);
     }
-
-    return null;
   }
 }

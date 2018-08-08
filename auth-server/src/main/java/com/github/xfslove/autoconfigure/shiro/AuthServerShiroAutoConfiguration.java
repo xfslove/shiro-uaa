@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Bean;
  */
 @AutoConfigureBefore({ShiroFilterAutoConfiguration.class, ShiroAutoConfiguration.class, ShiroWebAutoConfiguration.class})
 @ConditionalOnClass(Realm.class)
-public class OAuth2ServerShiroAutoConfiguration {
+public class AuthServerShiroAutoConfiguration {
 
   @Bean
   public Realm loginRealm(ApplicationContext applicationContext) {

@@ -1,4 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.github.xfslove.autoconfigure.shiro.OAuth2ServerShiroAutoConfiguration,\
-  com.github.xfslove.autoconfigure.shiro.OAuth2ServerFilterAutoConfiguration,\
-  com.github.xfslove.autoconfigure.shiro.OAuthServer2EndpointAutoConfiguration
+  com.github.xfslove.autoconfigure.shiro.AuthServerDefaultApiAutoConfiguration,\
+  com.github.xfslove.autoconfigure.shiro.AuthServerShiroAutoConfiguration,\
+  com.github.xfslove.autoconfigure.shiro.AuthServerFilterAutoConfiguration,\
+  com.github.xfslove.autoconfigure.shiro.AuthServerEndpointAutoConfiguration

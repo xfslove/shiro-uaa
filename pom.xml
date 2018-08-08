@@ -8,7 +8,7 @@
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Shiro-UAA</name>
-  <description>Simple User Account and Authentication (UAA) Server base on Shiro.</description>
+  <description>A lightweight User Account and Authentication (UAA) Server base on Shiro.</description>
   <url>https://github.com/xfslove/shiro-uaa</url>
 
   <licenses>

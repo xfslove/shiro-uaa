@@ -2,7 +2,10 @@ package com.github.xfslove.autoconfigure.shiro.endpoint;
 
 import com.github.xfslove.autoconfigure.shiro.jwt.JwtUtils;
 import com.github.xfslove.autoconfigure.shiro.model.*;
-import com.github.xfslove.autoconfigure.shiro.service.*;
+import com.github.xfslove.autoconfigure.shiro.service.AccessClientService;
+import com.github.xfslove.autoconfigure.shiro.service.AccessTokenService;
+import com.github.xfslove.autoconfigure.shiro.service.AccountService;
+import com.github.xfslove.autoconfigure.shiro.service.AuthCodeService;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuer;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuerImpl;
 import org.apache.oltu.oauth2.as.issuer.UUIDValueGenerator;
@@ -38,8 +41,6 @@ public class UaaAccessTokenEndpoint {
   private AuthCodeService authCodeService;
 
   private AccessTokenService accessTokenService;
-
-  private RoleService roleService;
 
   private AccountService accountService;
 
@@ -86,22 +87,21 @@ public class UaaAccessTokenEndpoint {
         if (System.currentTimeMillis() > authCode.getExpires().getTime()) {
           throw OAuthProblemException.error(OAuthError.TokenResponse.INVALID_REQUEST, "code expires");
         }
-        if (!authCode.getClientId().equals(accessClient.getClientId())) {
+        if (!authCode.getAccessClientId().equals(accessClient.getId())) {
           throw OAuthProblemException.error(OAuthError.TokenResponse.INVALID_GRANT, "not client issued code");
         }
 
         authCodeService.remove(authCode.getCode());
 
-        AccessToken issued = accessTokenService.getBySession(authCode.getSessionId(), authCode.getClientId());
+        AccessToken issued = accessTokenService.getBySession(authCode.getSessionId(), accessClient.getId());
         if (issued != null) {
           accessTokenService.remove(issued.getAccessToken());
         }
 
-        accessToken.setUsername(authCode.getUsername());
+        accessToken.setAccountId(authCode.getAccountId());
         accessToken.setSessionId(authCode.getSessionId());
+        accessToken.setAccessClientId(authCode.getAccessClientId());
 
-        accessToken.setClientId(authCode.getClientId());
-        accessToken.setClientSecret(authCode.getClientSecret());
       } else if (GrantType.REFRESH_TOKEN.toString().equals(grantType)) {
 
         String refreshToken = tokenRequest.getRefreshToken();
@@ -112,26 +112,30 @@ public class UaaAccessTokenEndpoint {
         if (System.currentTimeMillis() > expiredToken.getRefreshTokenExpires().getTime()) {
           throw OAuthProblemException.error(OAuthError.TokenResponse.INVALID_REQUEST, "refresh_token expires");
         }
+        if (!expiredToken.getAccessClientId().equals(accessClient.getId())) {
+          throw OAuthProblemException.error(OAuthError.TokenResponse.INVALID_GRANT, "not client issued refresh token");
+        }
 
         accessTokenService.remove(expiredToken.getAccessToken());
 
-        accessToken.setUsername(expiredToken.getUsername());
+        accessToken.setAccountId(expiredToken.getAccountId());
         accessToken.setSessionId(expiredToken.getSessionId());
+        accessToken.setAccessClientId(expiredToken.getAccessClientId());
 
-        accessToken.setClientId(expiredToken.getClientId());
-        accessToken.setClientSecret(expiredToken.getClientSecret());
       } else {
         throw OAuthProblemException.error(OAuthError.TokenResponse.UNSUPPORTED_GRANT_TYPE, "grant_type invalid");
       }
 
       accessTokenService.save(accessToken);
 
+      Jwt jwt = createJwt(accessToken);
       OAuthResponse response = OAuthASResponse
           .tokenResponse(HttpServletResponse.SC_OK)
-          .setAccessToken(JwtUtils.generate(createJwt(accessToken), accessToken.getClientSecret()))
+          .setAccessToken(JwtUtils.generate(jwt, clientSecret))
+          .setRefreshToken(accessToken.getRefreshToken())
           .buildJSONMessage();
 
-      LOGGER.info("UAA SERVER INFO : {} get access_token[{}] success from server, issued client_id:[{}]", accessToken.getUsername(), accessToken.getAccessToken(), clientId);
+      LOGGER.info("UAA SERVER INFO : {} get access_token[{}] success from server, issued client_id:[{}]", jwt.getSubject(), accessToken.getAccessToken(), clientId);
       return new ResponseEntity<>(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
     } catch (OAuthProblemException ex) {
 
@@ -141,16 +145,15 @@ public class UaaAccessTokenEndpoint {
   }
 
   private Jwt createJwt(AccessToken accessToken) {
+    Account account = accountService.getById(accessToken.getAccountId());
+
     Jwt jwt = new Jwt();
-    jwt.setSubject(accessToken.getUsername());
+    jwt.setSubject(account.getUsername());
     jwt.setExpires(accessToken.getAccessTokenExpires());
 
-    Account account = accountService.getByUsername(accessToken.getUsername());
-
     Map<String, Object> claims = jwt.getClaims();
-    claims.put(Constants.ACCESS_TOKEN, accessToken.getAccessToken());
-    claims.put(Constants.REFRESH_TOKEN, accessToken.getRefreshToken());
-    claims.put(Constants.PERM_CODE, roleService.getPermCodes(accessToken.getClientId(), account.getUsername()));
+    claims.put(Constants.PERM_ROLE, accountService.getPermRoles(account.getId(), accessToken.getAccessClientId()));
+    claims.put(Constants.PERM_CODE, accountService.getPermCodes(account.getId(), accessToken.getAccessClientId()));
 
     return jwt;
   }
@@ -165,10 +168,6 @@ public class UaaAccessTokenEndpoint {
 
   public void setAccessTokenService(AccessTokenService accessTokenService) {
     this.accessTokenService = accessTokenService;
-  }
-
-  public void setRoleService(RoleService roleService) {
-    this.roleService = roleService;
   }
 
   public void setAccountService(AccountService accountService) {

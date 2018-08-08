@@ -18,11 +18,9 @@ public class AccessToken implements Serializable {
 
   private Date refreshTokenExpires;
 
-  private String username;
+  private Long accountId;
 
-  private String clientId;
-
-  private String clientSecret;
+  private Long accessClientId;
 
   private String sessionId;
 
@@ -66,28 +64,20 @@ public class AccessToken implements Serializable {
     this.refreshTokenExpires = refreshTokenExpires;
   }
 
-  public String getClientId() {
-    return clientId;
+  public Long getAccessClientId() {
+    return accessClientId;
   }
 
-  public void setClientId(String clientId) {
-    this.clientId = clientId;
+  public void setAccessClientId(Long accessClientId) {
+    this.accessClientId = accessClientId;
   }
 
-  public String getClientSecret() {
-    return clientSecret;
+  public Long getAccountId() {
+    return accountId;
   }
 
-  public void setClientSecret(String clientSecret) {
-    this.clientSecret = clientSecret;
-  }
-
-  public String getUsername() {
-    return username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
+  public void setAccountId(Long accountId) {
+    this.accountId = accountId;
   }
 
   public String getSessionId() {

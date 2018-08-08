@@ -1,7 +1,6 @@
 package com.github.xfslove.autoconfigure.shiro.realm;
 
-import com.github.xfslove.autoconfigure.shiro.exception.OAuth2AuthenticationException;
-import com.github.xfslove.autoconfigure.shiro.exception.OAuth2AuthorizationException;
+import com.github.xfslove.autoconfigure.shiro.jwt.JwtUtils;
 import com.github.xfslove.autoconfigure.shiro.model.Constants;
 import com.github.xfslove.autoconfigure.shiro.model.Jwt;
 import org.apache.shiro.authc.AuthenticationException;
@@ -16,52 +15,41 @@ import org.apache.shiro.subject.PrincipalCollection;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by hanwen on 2017/9/19.
  */
-public class OAuth2ResourceRealm extends AuthorizingRealm {
+public class ResourceServerRealm extends AuthorizingRealm {
 
-  public OAuth2ResourceRealm() {
+  public ResourceServerRealm() {
   }
 
   @Override
   protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+    ResourceServerToken resourceServerToken = (ResourceServerToken) token;
+    String accessToken = (String) resourceServerToken.getPrincipal();
+    Jwt jwt = JwtUtils.parse(accessToken, (String) resourceServerToken.getCredentials(), Constants.OAUTH2_JWT_CLAIMS);
 
-    try {
-      OAuth2ResourceToken oAuth2ResourceToken = (OAuth2ResourceToken) token;
-      Jwt jwt = oAuth2ResourceToken.getJwt();
+    List<Object> principals = new ArrayList<>();
+    principals.add(jwt.getSubject());
+    principals.add(jwt);
 
-      List<Object> principals = new ArrayList<>();
-      principals.add(jwt.getSubject());
-      principals.add(jwt);
-
-      return new SimpleAuthenticationInfo(principals, jwt.getClaims().get(Constants.ACCESS_TOKEN), getName());
-    } catch (Exception e) {
-      throw new OAuth2AuthenticationException(e);
-    }
-
+    return new SimpleAuthenticationInfo(principals, token.getCredentials(), getName());
   }
 
   @Override
   protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+    Jwt jwt = (Jwt) principals.asList().get(1);
 
-    try {
-      Jwt jwt = (Jwt) principals.asList().get(1);
-      Set<String> permCodes = new HashSet<>((List) jwt.getClaims().get(Constants.PERM_CODE));
-
-      SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-      info.setStringPermissions(permCodes);
-      return info;
-    } catch (Exception e) {
-      throw new OAuth2AuthorizationException(e);
-    }
+    SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+    info.setRoles(new HashSet<String>((List) jwt.getClaims().get(Constants.PERM_ROLE)));
+    info.setStringPermissions(new HashSet<String>((List) jwt.getClaims().get(Constants.PERM_CODE)));
+    return info;
   }
 
   @Override
   public Class getAuthenticationTokenClass() {
-    return OAuth2ResourceToken.class;
+    return ResourceServerToken.class;
   }
 
   @Override

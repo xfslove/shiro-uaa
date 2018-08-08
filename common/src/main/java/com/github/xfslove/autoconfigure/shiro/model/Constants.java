@@ -29,11 +29,9 @@ public class Constants {
 
   public static final String ACCOUNT_ID = "aid";
 
-  public static final String ACCESS_TOKEN = "ast";
-
-  public static final String REFRESH_TOKEN = "rft";
+  public static final String PERM_ROLE = "pro";
 
   public static final String PERM_CODE = "pcd";
 
-  public static final String[] OAUTH2_JWT_CLAIMS = {ACCOUNT_ID, ACCESS_TOKEN, REFRESH_TOKEN, PERM_CODE};
+  public static final String[] OAUTH2_JWT_CLAIMS = {ACCOUNT_ID, PERM_ROLE, PERM_CODE};
 }

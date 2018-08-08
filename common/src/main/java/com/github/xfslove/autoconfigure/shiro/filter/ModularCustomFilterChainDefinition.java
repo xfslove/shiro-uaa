@@ -1,9 +1,8 @@
 package com.github.xfslove.autoconfigure.shiro.filter;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,14 +12,10 @@ import java.util.Map;
  */
 public class ModularCustomFilterChainDefinition implements ShiroFilterChainDefinition {
 
-  private List<CustomFilterChainDefinition> filterChainDefinitions;
+  private List<CustomFilterChainDefinition> filterChainDefinitions = new ArrayList<>();
 
   @Override
   public Map<String, String> getFilterChainMap() {
-    if (CollectionUtils.isEmpty(filterChainDefinitions)) {
-      return Collections.emptyMap();
-    }
-
     LinkedHashMap<String, String> filterChainMap = new LinkedHashMap<>();
     for (CustomFilterChainDefinition filterChainDefinition : filterChainDefinitions) {
       filterChainMap.putAll(filterChainDefinition.getFilterChainMap());

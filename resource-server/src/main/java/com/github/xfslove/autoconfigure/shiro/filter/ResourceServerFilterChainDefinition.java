@@ -8,15 +8,15 @@ import java.util.LinkedHashMap;
 /**
  * Created by hanwen on 2017/9/20.
  */
-public class OAuth2ResourceFilterChainDefinition implements CustomFilterChainDefinition {
+public class ResourceServerFilterChainDefinition implements CustomFilterChainDefinition {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2ResourceFilterChainDefinition.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(ResourceServerFilterChainDefinition.class);
 
   private static final String LOGGER_MSG = "Register";
 
   private String logoutUrl;
 
-  public OAuth2ResourceFilterChainDefinition(String logoutUrl) {
+  public ResourceServerFilterChainDefinition(String logoutUrl) {
     this.logoutUrl = logoutUrl;
   }
 

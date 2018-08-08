@@ -12,11 +12,9 @@ public interface AccessTokenService {
 
   void save(AccessToken entity);
 
-  AccessToken getByAccessToken(String accessToken);
-
   AccessToken getByRefreshToken(String refreshToken);
 
-  AccessToken getBySession(String sessionId, String clientId);
+  AccessToken getBySession(String sessionId, Long accessClientId);
 
   List<AccessToken> getBySession(String sessionId);
 

@@ -15,7 +15,7 @@ public class AccessClient implements Serializable {
 
   private String clientSecret;
 
-  private boolean enabled;
+  private boolean enabled = true;
 
   public Long getId() {
     return id;

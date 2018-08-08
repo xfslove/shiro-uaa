@@ -1,9 +1,12 @@
 package com.github.xfslove.autoconfigure.shiro;
 
+import com.github.xfslove.autoconfigure.shiro.endpoint.UaaAccessTokenEndpoint;
 import com.github.xfslove.autoconfigure.shiro.endpoint.UaaAuthorizeEndpoint;
 import com.github.xfslove.autoconfigure.shiro.endpoint.UaaLogoutEndpoint;
-import com.github.xfslove.autoconfigure.shiro.endpoint.UaaAccessTokenEndpoint;
-import com.github.xfslove.autoconfigure.shiro.service.*;
+import com.github.xfslove.autoconfigure.shiro.service.AccessClientService;
+import com.github.xfslove.autoconfigure.shiro.service.AccessTokenService;
+import com.github.xfslove.autoconfigure.shiro.service.AccountService;
+import com.github.xfslove.autoconfigure.shiro.service.AuthCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -14,15 +17,15 @@ import org.springframework.context.annotation.Bean;
 /**
  * Created by hanwen on 2017/11/23.
  */
-@AutoConfigureAfter(OAuth2ServerShiroAutoConfiguration.class)
-@EnableConfigurationProperties(OAuth2ServerProperties.class)
-public class OAuthServer2EndpointAutoConfiguration {
+@AutoConfigureAfter(AuthServerShiroAutoConfiguration.class)
+@EnableConfigurationProperties(AuthServerProperties.class)
+public class AuthServerEndpointAutoConfiguration {
 
   @Value("${shiro.loginUrl}")
   private String loginUrl;
 
   @Autowired
-  private OAuth2ServerProperties serverProperties;
+  private AuthServerProperties serverProperties;
 
   @Bean
   public UaaAccessTokenEndpoint uaaAccessTokenEndpoint(ApplicationContext applicationContext) {
@@ -31,7 +34,6 @@ public class OAuthServer2EndpointAutoConfiguration {
     uaaAccessTokenEndpoint.setRefreshTokenExpires(serverProperties.getRefreshTokenExpires());
     uaaAccessTokenEndpoint.setAccessTokenService(applicationContext.getBean(AccessTokenService.class));
     uaaAccessTokenEndpoint.setAccessClientService(applicationContext.getBean(AccessClientService.class));
-    uaaAccessTokenEndpoint.setRoleService(applicationContext.getBean(RoleService.class));
     uaaAccessTokenEndpoint.setAccountService(applicationContext.getBean(AccountService.class));
     uaaAccessTokenEndpoint.setAuthCodeService(applicationContext.getBean(AuthCodeService.class));
     return uaaAccessTokenEndpoint;

@@ -1,10 +1,9 @@
 package com.github.xfslove.autoconfigure.shiro.filter;
 
 import com.github.xfslove.autoconfigure.shiro.exception.OAuth2AuthenticationException;
-import com.github.xfslove.autoconfigure.shiro.jwt.JwtUtils;
 import com.github.xfslove.autoconfigure.shiro.model.Constants;
 import com.github.xfslove.autoconfigure.shiro.model.Jwt;
-import com.github.xfslove.autoconfigure.shiro.realm.OAuth2ResourceToken;
+import com.github.xfslove.autoconfigure.shiro.realm.ResourceServerToken;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.URLConnectionClient;
@@ -33,9 +32,9 @@ import java.io.IOException;
 /**
  * Created by hanwen on 2017/9/20.
  */
-public class OAuth2ResourceFilter extends AuthenticatingFilter {
+public class ResourceServerFilter extends AuthenticatingFilter {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2ResourceFilter.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(ResourceServerFilter.class);
 
   private String serverScheme;
 
@@ -53,9 +52,8 @@ public class OAuth2ResourceFilter extends AuthenticatingFilter {
   protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
     Subject subject = SecurityUtils.getSubject();
     Session session = subject.getSession(false);
-    Jwt jwt = (Jwt) session.getAttribute(OAuth.OAUTH_ACCESS_TOKEN);
-    session.removeAttribute(OAuth.OAUTH_ACCESS_TOKEN);
-    return new OAuth2ResourceToken(jwt);
+    String accessToken = (String) session.getAttribute(OAuth.OAUTH_ACCESS_TOKEN);
+    return new ResourceServerToken(accessToken, clientSecret);
   }
 
   @Override
@@ -76,10 +74,8 @@ public class OAuth2ResourceFilter extends AuthenticatingFilter {
 
     if (subject.isAuthenticated()) {
       // refresh token
-      Jwt jwt = (Jwt) subject.getPrincipals().asList().get(1);
-
       try {
-        refreshToken(request, (String) jwt.getClaims().get(Constants.REFRESH_TOKEN));
+        refreshToken(request);
         return executeLogin(request, response);
       } catch (OAuth2AuthenticationException e) {
         LOGGER.error("UAA RESOURCE INFO : oauth resource refresh token error. msg:{}", e.getMessage());
@@ -99,15 +95,15 @@ public class OAuth2ResourceFilter extends AuthenticatingFilter {
 
       String authCode = httpRequest.getParameter(OAuth.OAUTH_CODE);
       Session session = subject.getSession(false);
-      Jwt jwt = session == null ? null : (Jwt) session.getAttribute(OAuth.OAUTH_ACCESS_TOKEN);
+      String accessToken = session == null ? null : (String) session.getAttribute(OAuth.OAUTH_ACCESS_TOKEN);
 
-      if (StringUtils.isBlank(authCode) && jwt == null) {
+      if (StringUtils.isBlank(authCode) && StringUtils.isBlank(accessToken)) {
 
         redirectToLogin(request, response);
         return false;
       }
 
-      if (jwt == null) {
+      if (StringUtils.isBlank(accessToken)) {
         try {
           saveToken(request, authCode);
         } catch (OAuth2AuthenticationException e) {
@@ -206,13 +202,14 @@ public class OAuth2ResourceFilter extends AuthenticatingFilter {
 
       OAuthAccessTokenResponse resp = oAuthClient.accessToken(req, OAuth.HttpMethod.POST);
 
-      session.setAttribute(OAuth.OAUTH_ACCESS_TOKEN, JwtUtils.parse(resp.getAccessToken(), clientSecret, Constants.OAUTH2_JWT_CLAIMS));
+      session.setAttribute(OAuth.OAUTH_ACCESS_TOKEN, resp.getAccessToken());
+      session.setAttribute(OAuth.OAUTH_REFRESH_TOKEN, resp.getRefreshToken());
     } catch (Exception e) {
       throw new OAuth2AuthenticationException(e);
     }
   }
 
-  private void refreshToken(ServletRequest request, String refreshToken) {
+  private void refreshToken(ServletRequest request) {
     HttpServletRequest httpRequest = WebUtils.toHttp(request);
 
     Subject subject = SecurityUtils.getSubject();
@@ -230,6 +227,7 @@ public class OAuth2ResourceFilter extends AuthenticatingFilter {
       redirectUrl += "?" + httpRequest.getQueryString();
     }
 
+    String refreshToken = (String) session.getAttribute(OAuth.OAUTH_REFRESH_TOKEN);
     try {
       OAuthClient oAuthClient = new OAuthClient(new URLConnectionClient());
       OAuthClientRequest req = OAuthClientRequest
@@ -242,7 +240,8 @@ public class OAuth2ResourceFilter extends AuthenticatingFilter {
           .buildQueryMessage();
 
       OAuthAccessTokenResponse resp = oAuthClient.accessToken(req, OAuth.HttpMethod.POST);
-      session.setAttribute(OAuth.OAUTH_ACCESS_TOKEN, JwtUtils.parse(resp.getAccessToken(), clientSecret, Constants.OAUTH2_JWT_CLAIMS));
+      session.setAttribute(OAuth.OAUTH_ACCESS_TOKEN, resp.getAccessToken());
+      session.setAttribute(OAuth.OAUTH_REFRESH_TOKEN, resp.getRefreshToken());
     } catch (Exception e) {
       throw new OAuth2AuthenticationException(e);
     }

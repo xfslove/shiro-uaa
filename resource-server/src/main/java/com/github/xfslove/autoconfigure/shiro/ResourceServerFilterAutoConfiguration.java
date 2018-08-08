@@ -2,8 +2,8 @@ package com.github.xfslove.autoconfigure.shiro;
 
 import com.github.xfslove.autoconfigure.shiro.filter.CustomFilterChainDefinition;
 import com.github.xfslove.autoconfigure.shiro.filter.CustomFilterWrapper;
-import com.github.xfslove.autoconfigure.shiro.filter.OAuth2ResourceFilterChainDefinition;
-import com.github.xfslove.autoconfigure.shiro.filter.OAuth2ResourceFilterWrapper;
+import com.github.xfslove.autoconfigure.shiro.filter.ResourceServerFilterChainDefinition;
+import com.github.xfslove.autoconfigure.shiro.filter.ResourceServerFilterWrapper;
 import org.apache.shiro.realm.Realm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,20 +15,20 @@ import org.springframework.context.annotation.Bean;
 /**
  * Created by hanwen on 2017/6/8.
  */
-@EnableConfigurationProperties(OAuth2ResourceProperties.class)
+@EnableConfigurationProperties(ResourceServerProperties.class)
 @AutoConfigureBefore({ShiroFilterAutoConfiguration.class, ShiroAutoConfiguration.class})
 @ConditionalOnClass(Realm.class)
-public class OAuth2ResourceFilterAutoConfiguration {
+public class ResourceServerFilterAutoConfiguration {
 
   @Autowired
-  private OAuth2ResourceProperties resourceProperties;
+  private ResourceServerProperties resourceProperties;
 
   @Value("${shiro.logoutUrl}")
   private String logoutUrl;
 
   @Bean
   public CustomFilterWrapper oauth2ResourceFilter() {
-    OAuth2ResourceFilterWrapper filter = new OAuth2ResourceFilterWrapper();
+    ResourceServerFilterWrapper filter = new ResourceServerFilterWrapper();
     filter.setServerScheme(resourceProperties.getServerScheme());
     filter.setServerHost(resourceProperties.getServerHost());
     filter.setServerPort(resourceProperties.getServerPort());
@@ -40,6 +40,6 @@ public class OAuth2ResourceFilterAutoConfiguration {
 
   @Bean
   public CustomFilterChainDefinition oauth2ResourceFilterChain() {
-    return new OAuth2ResourceFilterChainDefinition(logoutUrl);
+    return new ResourceServerFilterChainDefinition(logoutUrl);
   }
 }

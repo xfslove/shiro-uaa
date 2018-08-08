@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * Created by hanwen on 2017/9/20.
  */
 @ConfigurationProperties(prefix = "shiro.uaa.resource")
-public class OAuth2ResourceProperties {
+public class ResourceServerProperties {
 
   private String serverScheme = "http";
 

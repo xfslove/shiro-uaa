@@ -8,11 +8,11 @@ import org.springframework.context.annotation.Bean;
 /**
  * Created by hanwen on 05/01/2018.
  */
-@AutoConfigureAfter(OAuth2ResourceShiroAutoConfiguration.class)
-public class OAuth2ResourceEndpointAutoConfiguration {
+@AutoConfigureAfter(ResourceServerShiroAutoConfiguration.class)
+public class ResourceServerEndpointAutoConfiguration {
 
   @Autowired
-  private OAuth2ResourceProperties resourceProperties;
+  private ResourceServerProperties resourceProperties;
 
   @Bean
   public LogoutEndpoint logoutEndpoint() {
