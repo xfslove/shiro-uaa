@@ -93,11 +93,11 @@ A lightweight User Account and Authentication (UAA) Server base on Shiro.
 
   ##### filterChainDefinition
 
-  implement `com.github.xfslove.autoconfigure.shiro.filter.CustomFilterChainDefinition` ，定义不同的path经过不同的Filter
+  implement `CustomFilterChainDefinition` ，定义不同的path经过不同的Filter
 
   ##### logout
 
-  先从Resource Server登出，再从UAA登出，配置`shiro.logoutUrl`参数加载`com.github.xfslove.autoconfigure.shiro.endpoint.LogoutEndpoint`
+  先从Resource Server登出，再从UAA登出，配置`shiro.logoutUrl`参数加载`LogoutEndpoint`
 
   ##### 注解
 

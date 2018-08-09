@@ -1,5 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.github.xfslove.autoconfigure.shiro.ResourceServerShiroAutoConfiguration,\
-  com.github.xfslove.autoconfigure.shiro.ResourceServerFilterAutoConfiguration,\
-  com.github.xfslove.autoconfigure.shiro.ResourceServerEndpointAutoConfiguration
+  com.github.xfslove.shiro.uaa.ResourceServerShiroAutoConfiguration,\
+  com.github.xfslove.shiro.uaa.ResourceServerFilterAutoConfiguration,\
+  com.github.xfslove.shiro.uaa.ResourceServerEndpointAutoConfiguration
 
