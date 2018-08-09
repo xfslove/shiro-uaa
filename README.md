@@ -133,6 +133,7 @@ A lightweight User Account and Authentication (UAA) Server base on Shiro.
 #### TODO
 
 - 提供auth-server可部署服务
+- 为auth-server提供用户metrics
 
 #### 例子
 
