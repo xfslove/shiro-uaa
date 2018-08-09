@@ -2,15 +2,15 @@ package com.github.xfslove.autoconfigure.shiro;
 
 import com.github.xfslove.autoconfigure.shiro.filter.CustomFilterChainDefinition;
 import com.github.xfslove.autoconfigure.shiro.filter.ModularCustomFilterChainDefinition;
-import com.github.xfslove.autoconfigure.shiro.realm.AllSupportSuccessfulStrategy;
+import com.github.xfslove.autoconfigure.shiro.realm.NoopRealm;
 import org.apache.commons.lang3.builder.CompareToBuilder;
-import org.apache.shiro.authc.pam.AuthenticationStrategy;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.config.web.autoconfigure.ShiroWebAutoConfiguration;
 import org.apache.shiro.spring.web.config.AbstractShiroWebConfiguration;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
@@ -27,9 +27,9 @@ public class ShiroAutoConfiguration extends AbstractShiroWebConfiguration implem
   private ApplicationContext applicationContext;
 
   @Bean
-  @Override
-  public AuthenticationStrategy authenticationStrategy() {
-    return new AllSupportSuccessfulStrategy();
+  @ConditionalOnMissingBean(Realm.class)
+  public Realm noopRealm() {
+    return new NoopRealm();
   }
 
   @Bean

@@ -15,11 +15,9 @@ public class ModularCustomFilter {
 
   public Map<String, Filter> getFilters() {
     Map<String, Filter> filterMap = new HashMap<>();
-
     for (CustomFilterWrapper filterWrapper : filterWrappers) {
       filterMap.put(filterWrapper.getName(), filterWrapper.getFilter());
     }
-
     return filterMap;
   }
 
