@@ -52,7 +52,7 @@ A lightweight User Account and Authentication (UAA) Server base on Shiro.
 
   | 接口名              | 说明             |
   | ------------------- | ---------------- |
-  | AccessClientService | 接入系统服务     |
+  | AccessClientService | 接入应用服务     |
   | AccessTokenService  | access-token服务 |
   | AccountService      | 用户服务         |
   | AuthCodeService     | code服务         |
@@ -96,7 +96,7 @@ A lightweight User Account and Authentication (UAA) Server base on Shiro.
 
   ##### filterChainDefinition
 
-  implement `CustomFilterChainDefinition` ，定义不同的path经过不同的Filter
+  implement `CustomFilterChainDefinition` ，定义不同的path经过不同的Filter，默认`/**`经过resourceServerFilter
 
   ##### logout
 
