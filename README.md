@@ -1,5 +1,6 @@
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.xfslove/shiro-uaa/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.xfslove/shiro-uaa)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.xfslove/shiro-uaa/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.xfslove/shiro-uaa)[![Gitee](https://gitee.com/xfslove/shiro-uaa/badge/star.svg)](https://gitee.com/xfslove/shiro-uaa)
+[![Github](http://github-svg-buttons.herokuapp.com/star.svg?user=xfslove&repo=shiro-uaa)](https://github.com/xfslove/shiro-uaa)
 
 # shiro-uaa
 
@@ -79,8 +80,6 @@ A lightweight User Account and Authentication (UAA) Server base on Shiro.
   | shiro.uaa.server.accounts[].username    | 账号登录名，使用默认内存AccountService时有效                 |
   | shiro.uaa.server.accounts[].password    | 账号密码，使用默认内存AccountService时有效                   |
   | shiro.uaa.server.accounts[].roles[]     | 账号拥有角色，使用默认内存AccountService时有效               |
-
-  
 
 - resource-server
 
