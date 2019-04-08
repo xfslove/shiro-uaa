@@ -1,6 +1,7 @@
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.xfslove/shiro-uaa/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.xfslove/shiro-uaa)[![Gitee](https://gitee.com/xfslove/shiro-uaa/badge/star.svg)](https://gitee.com/xfslove/shiro-uaa)
-[![Github](http://github-svg-buttons.herokuapp.com/star.svg?user=xfslove&repo=shiro-uaa)](https://github.com/xfslove/shiro-uaa)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.xfslove/shiro-uaa/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.xfslove/shiro-uaa)
+[![Gitee](https://gitee.com/xfslove/shiro-uaa/badge/star.svg)](https://gitee.com/xfslove/shiro-uaa)
+[![Github](http://github-svg-buttons.herokuapp.com/star.svg?user=xfslove&repo=shiro-uaa&style=flat)](https://github.com/xfslove/shiro-uaa)
 
 # shiro-uaa
 
