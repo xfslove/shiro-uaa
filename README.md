@@ -37,7 +37,7 @@ A lightweight User Account and Authentication (UAA) Server base on Shiro.
   <dependency>
       <groupId>com.github.xfslove</groupId>
       <artifactId>shiro-uaa-auth-server</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.1</version>
   </dependency>
   ```
 
