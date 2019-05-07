@@ -1,7 +1,7 @@
 package com.github.xfslove.shiro.uaa.jwt;
 
-import com.github.xfslove.shiro.uaa.model.Jwt;
 import com.github.xfslove.shiro.uaa.exception.OAuth2AuthenticationException;
+import com.github.xfslove.shiro.uaa.model.Jwt;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -10,9 +10,6 @@ import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import net.minidev.json.JSONArray;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -21,8 +18,6 @@ import java.util.Map;
  * Created by hanwen on 28/12/2017.
  */
 public class JwtUtils {
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(JwtUtils.class);
 
   public static String generate(Jwt jwt, String clientSecret) {
     try {
@@ -57,7 +52,6 @@ public class JwtUtils {
 
       return signedJwt.serialize();
     } catch (JOSEException e) {
-      LOGGER.error(ExceptionUtils.getStackTrace(e));
       throw new OAuth2AuthenticationException("json web token parse error", e);
     }
   }
@@ -103,7 +97,6 @@ public class JwtUtils {
 
       return jwt;
     } catch (Exception e) {
-      LOGGER.error(ExceptionUtils.getStackTrace(e));
       throw new OAuth2AuthenticationException("json web token parse error", e);
     }
   }
