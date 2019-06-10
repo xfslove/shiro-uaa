@@ -1,0 +1,11 @@
+{
+  "groups": [{"name": "shiro"}],
+  "properties": [
+    {
+      "name": "shiro.stateless",
+      "type": "java.lang.Boolean",
+      "description": "Enable or disable stateless server.",
+      "defaultValue": false
+    }
+  ]
+}

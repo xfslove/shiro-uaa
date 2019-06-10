@@ -1,0 +1,11 @@
+{
+  "groups": [{"name": "shiro"}],
+  "properties": [
+    {
+      "name": "shiro.logoutUrl",
+      "type": "java.lang.String",
+      "description": "Resource Logout url.",
+      "defaultValue": ""
+    }
+  ]
+}

@@ -4,10 +4,10 @@
   <parent>
     <groupId>com.github.xfslove</groupId>
     <artifactId>shiro-uaa</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
   </parent>
 
-  <version>1.0.1</version>
+  <version>1.0.2-SNAPSHOT</version>
   <artifactId>shiro-uaa-common</artifactId>
   <packaging>jar</packaging>
   <name>Shiro-UAA Auth Common</name>
@@ -16,7 +16,7 @@
 
   <properties>
     <commons-lang3.version>3.4</commons-lang3.version>
-    <shiro.version>1.4.0</shiro.version>
+    <shiro.version>1.4.1</shiro.version>
     <oauth.version>1.0.2</oauth.version>
     <jwt.version>5.2</jwt.version>
   </properties>
@@ -59,6 +59,13 @@
       <groupId>com.nimbusds</groupId>
       <artifactId>nimbus-jose-jwt</artifactId>
       <version>${jwt.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <version>1.5.19.RELEASE</version>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 

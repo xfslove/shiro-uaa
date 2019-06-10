@@ -4,11 +4,11 @@
   <parent>
     <groupId>com.github.xfslove</groupId>
     <artifactId>shiro-uaa</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
 
-  <version>1.0.1</version>
+  <version>1.0.2-SNAPSHOT</version>
   <artifactId>shiro-uaa-resource-server</artifactId>
   <packaging>jar</packaging>
   <name>Shiro-UAA Resource Server</name>
@@ -20,6 +20,13 @@
       <groupId>com.github.xfslove</groupId>
       <artifactId>shiro-uaa-common</artifactId>
       <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <version>1.5.19.RELEASE</version>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 
