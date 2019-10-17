@@ -4,11 +4,11 @@
   <parent>
     <groupId>com.github.xfslove</groupId>
     <artifactId>shiro-uaa</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <relativePath>..</relativePath>
   </parent>
 
-  <version>1.0.2</version>
+  <version>1.0.3</version>
   <artifactId>shiro-uaa-resource-server</artifactId>
   <packaging>jar</packaging>
   <name>Shiro-UAA Resource Server</name>
