@@ -4,10 +4,10 @@
   <parent>
     <groupId>com.github.xfslove</groupId>
     <artifactId>shiro-uaa</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4-SNAPSHOT</version>
   </parent>
 
-  <version>1.0.3</version>
+  <version>1.0.4-SNAPSHOT</version>
   <artifactId>shiro-uaa-common</artifactId>
   <packaging>jar</packaging>
   <name>Shiro-UAA Auth Common</name>
@@ -16,7 +16,7 @@
 
   <properties>
     <commons-lang3.version>3.4</commons-lang3.version>
-    <shiro.version>1.4.1</shiro.version>
+    <shiro.version>1.5.3</shiro.version>
     <oauth.version>1.0.2</oauth.version>
     <jwt.version>7.9</jwt.version>
   </properties>
