@@ -7,7 +7,6 @@ import com.github.xfslove.shiro.uaa.service.AccessClientService;
 import com.github.xfslove.shiro.uaa.service.AccessTokenService;
 import com.github.xfslove.shiro.uaa.service.AccountService;
 import com.github.xfslove.shiro.uaa.service.AuthCodeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -24,11 +23,8 @@ public class AuthServerEndpointAutoConfiguration {
   @Value("${shiro.loginUrl}")
   private String loginUrl;
 
-  @Autowired
-  private AuthServerProperties serverProperties;
-
   @Bean
-  public UaaAccessTokenEndpoint uaaAccessTokenEndpoint(ApplicationContext applicationContext) {
+  public UaaAccessTokenEndpoint uaaAccessTokenEndpoint(ApplicationContext applicationContext, AuthServerProperties serverProperties) {
     UaaAccessTokenEndpoint uaaAccessTokenEndpoint = new UaaAccessTokenEndpoint();
     uaaAccessTokenEndpoint.setAccessTokenExpires(serverProperties.getAccessTokenExpires());
     uaaAccessTokenEndpoint.setRefreshTokenExpires(serverProperties.getRefreshTokenExpires());
@@ -40,7 +36,7 @@ public class AuthServerEndpointAutoConfiguration {
   }
 
   @Bean
-  public UaaAuthorizeEndpoint uaaAuthorizeEndpoint(ApplicationContext applicationContext) {
+  public UaaAuthorizeEndpoint uaaAuthorizeEndpoint(ApplicationContext applicationContext, AuthServerProperties serverProperties) {
     UaaAuthorizeEndpoint uaaAuthorizeEndpoint = new UaaAuthorizeEndpoint();
     uaaAuthorizeEndpoint.setLoginUrl(loginUrl);
     uaaAuthorizeEndpoint.setCodeExpires(serverProperties.getCodeExpires());

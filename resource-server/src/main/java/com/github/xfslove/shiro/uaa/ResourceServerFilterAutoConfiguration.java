@@ -5,7 +5,6 @@ import com.github.xfslove.shiro.uaa.filter.CustomFilterWrapper;
 import com.github.xfslove.shiro.uaa.filter.ResourceServerFilterChainDefinition;
 import com.github.xfslove.shiro.uaa.filter.ResourceServerFilterWrapper;
 import org.apache.shiro.realm.Realm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -20,14 +19,11 @@ import org.springframework.context.annotation.Bean;
 @ConditionalOnClass(Realm.class)
 public class ResourceServerFilterAutoConfiguration {
 
-  @Autowired
-  private ResourceServerProperties resourceProperties;
-
   @Value("${shiro.logoutUrl}")
   private String logoutUrl;
 
   @Bean
-  public CustomFilterWrapper oauth2ResourceFilter() {
+  public CustomFilterWrapper oauth2ResourceFilter(ResourceServerProperties resourceProperties) {
     ResourceServerFilterWrapper filter = new ResourceServerFilterWrapper();
     filter.setServerScheme(resourceProperties.getServerScheme());
     filter.setServerHost(resourceProperties.getServerHost());
