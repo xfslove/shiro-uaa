@@ -128,7 +128,7 @@ A lightweight User Account and Authentication (UAA) Server base on Shiro.
 
 #### Requires
 
-*jdk1.7+ and spring boot*
+*jdk1.8+ and spring boot*
 
 #### TODO
 
