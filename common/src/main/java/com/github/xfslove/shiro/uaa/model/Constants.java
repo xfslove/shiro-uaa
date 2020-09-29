@@ -16,7 +16,7 @@ public class Constants {
 
   public static final String SERVER_RESOURCE_PATH = "/uaa-resource";
 
-  public static final String SERVER_AUTHORIZE_PATH = SERVER_AUTH_PATH + "/authorize";
+  public static final String SERVER_AUTHENTICATION_PATH = SERVER_AUTH_PATH + "/authentication";
 
   public static final String SERVER_ACCESS_TOKEN_PATH = SERVER_AUTH_PATH + "/access-token";
 

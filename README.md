@@ -43,12 +43,12 @@ A lightweight User Account and Authentication (UAA) Server base on Shiro.
 
   ##### 内置endpoint
 
-  | URI地址                     | 说明                                  |
-  | --------------------------- | ------------------------------------- |
-  | /uaa-auth/authorize         | 请求授权的地址，会定向到你的登录页    |
-  | /uaa-auth/authorzie/apporve | 同意授权，分发code地址                |
-  | /uaa-auth/access-token      | Resource Server获取access-token的地址 |
-  | /uaa-auth/logout            | 从UAA登出的地址                       |
+  | URI地址                           | 说明                                |
+  | ---------------------------      | ----------------------------------- |
+  | /uaa-auth/authentication         | 请求授权的地址，会定向到你的登录页        |
+  | /uaa-auth/authentication/apporve | Auth Server同意授权，分发code地址      |
+  | /uaa-auth/access-token           | 从Auth Server获取access-token的地址   |
+  | /uaa-auth/logout                 | 从Auth Server登出的地址               |
 
   ##### 可扩展api
 

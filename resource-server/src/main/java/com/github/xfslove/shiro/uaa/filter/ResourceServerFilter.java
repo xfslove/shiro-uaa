@@ -153,7 +153,7 @@ public class ResourceServerFilter extends AuthenticatingFilter {
         .scheme(serverScheme)
         .host(serverHost)
         .port(serverPort)
-        .path(serverContextPath + Constants.SERVER_AUTHORIZE_PATH)
+        .path(serverContextPath + Constants.SERVER_AUTHENTICATION_PATH)
         .build().toUriString();
 
     try {

@@ -32,10 +32,10 @@ import java.util.Date;
 /**
  * Created by hanwen on 2017/9/19.
  */
-@RequestMapping(Constants.SERVER_AUTHORIZE_PATH)
-public class UaaAuthorizeEndpoint {
+@RequestMapping(Constants.SERVER_AUTHENTICATION_PATH)
+public class UaaAuthenticationEndpoint {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(UaaAuthorizeEndpoint.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(UaaAuthenticationEndpoint.class);
 
   private AccessClientService accessClientService;
 
@@ -73,7 +73,7 @@ public class UaaAuthorizeEndpoint {
       // sso
       Subject subject = SecurityUtils.getSubject();
       if (subject.isAuthenticated()) {
-        modelAndView.setViewName("forward:" + Constants.SERVER_AUTHORIZE_PATH + "/approve");
+        modelAndView.setViewName("forward:" + Constants.SERVER_AUTHENTICATION_PATH + "/approve");
         return modelAndView;
       }
 

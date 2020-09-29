@@ -1,7 +1,7 @@
 package com.github.xfslove.shiro.uaa;
 
 import com.github.xfslove.shiro.uaa.endpoint.UaaAccessTokenEndpoint;
-import com.github.xfslove.shiro.uaa.endpoint.UaaAuthorizeEndpoint;
+import com.github.xfslove.shiro.uaa.endpoint.UaaAuthenticationEndpoint;
 import com.github.xfslove.shiro.uaa.endpoint.UaaLogoutEndpoint;
 import com.github.xfslove.shiro.uaa.service.AccessClientService;
 import com.github.xfslove.shiro.uaa.service.AccessTokenService;
@@ -36,13 +36,13 @@ public class AuthServerEndpointAutoConfiguration {
   }
 
   @Bean
-  public UaaAuthorizeEndpoint uaaAuthorizeEndpoint(ApplicationContext applicationContext, AuthServerProperties serverProperties) {
-    UaaAuthorizeEndpoint uaaAuthorizeEndpoint = new UaaAuthorizeEndpoint();
-    uaaAuthorizeEndpoint.setLoginUrl(loginUrl);
-    uaaAuthorizeEndpoint.setCodeExpires(serverProperties.getCodeExpires());
-    uaaAuthorizeEndpoint.setAccessClientService(applicationContext.getBean(AccessClientService.class));
-    uaaAuthorizeEndpoint.setAuthCodeService(applicationContext.getBean(AuthCodeService.class));
-    return uaaAuthorizeEndpoint;
+  public UaaAuthenticationEndpoint uaaAuthorizeEndpoint(ApplicationContext applicationContext, AuthServerProperties serverProperties) {
+    UaaAuthenticationEndpoint uaaAuthenticationEndpoint = new UaaAuthenticationEndpoint();
+    uaaAuthenticationEndpoint.setLoginUrl(loginUrl);
+    uaaAuthenticationEndpoint.setCodeExpires(serverProperties.getCodeExpires());
+    uaaAuthenticationEndpoint.setAccessClientService(applicationContext.getBean(AccessClientService.class));
+    uaaAuthenticationEndpoint.setAuthCodeService(applicationContext.getBean(AuthCodeService.class));
+    return uaaAuthenticationEndpoint;
   }
 
   @Bean
