@@ -16,7 +16,7 @@ public @interface ShiroBizLogger {
 
   boolean methodName() default true;
 
-  int[] argumentIndies();
+  int[] argumentIndies() default {};
 
   boolean returnValue() default false;
 }
