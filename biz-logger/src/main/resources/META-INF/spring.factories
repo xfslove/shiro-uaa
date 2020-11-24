@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.github.xfslove.shiro.uaa.ShiroBizLoggerAutoConfiguration
+  com.github.xfslove.shiro.uaa.BizLoggerAutoConfiguration

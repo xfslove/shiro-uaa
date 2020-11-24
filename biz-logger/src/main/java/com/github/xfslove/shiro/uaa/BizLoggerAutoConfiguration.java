@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 /**
  * Created by hanwen on 2020/11/24.
  */
-public class ShiroBizLoggerAutoConfiguration {
+public class BizLoggerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(BizLoggerEntityStringifier.class)
