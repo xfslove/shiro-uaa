@@ -37,7 +37,7 @@ A lightweight User Account and Authentication (UAA) Server base on Shiro.
   <dependency>
       <groupId>com.github.xfslove</groupId>
       <artifactId>shiro-uaa-auth-server</artifactId>
-      <version>1.0.6</version>
+      <version>1.0.7-SNAPSHOT</version>
   </dependency>
   ```
 
@@ -90,7 +90,7 @@ A lightweight User Account and Authentication (UAA) Server base on Shiro.
   <dependency>
       <groupId>com.github.xfslove</groupId>
       <artifactId>shiro-uaa-resource-server</artifactId>
-      <version>1.0.6</version>
+      <version>1.0.7-SNAPSHOT</version>
   </dependency>
   ```
 
@@ -126,6 +126,38 @@ A lightweight User Account and Authentication (UAA) Server base on Shiro.
   | shiro.uaa.resource.clientSecret      | UAA分配的ClientSecret   |
   | shiro.logoutUrl                      | Resource Server登出地址 |
 
+- biz-logger
+  
+  记录用户的业务记录
+  
+  ##### maven
+  
+  ```
+  <dependency>
+      <groupId>com.github.xfslove</groupId>
+      <artifactId>shiro-uaa-biz-logger</artifactId>
+      <version>1.0.7-SNAPSHOT</version>
+  </dependency>
+  ```
+  
+  ##### 注解
+  
+  | 注解名                  |
+  | ---------------------- |
+  | @BizLogger        |
+  
+  | 注解方法                               | 说明                    |
+  | ------------------------------------ | ----------------------- |
+  | remark      | 备注，默认：""              |
+  | className      | 是否记录类名，默认：true              |
+  | methodName        | 是否记录方法名，默认：true           |
+  | argumentIndies        | 需要记录参数的索引，默认：{}     |
+  | returnValue | 是否记录返回值，默认：false                     |
+  
+  ##### BizLoggerEntityStringifier
+  
+  implement `BizLoggerEntityStringifier` ，自定义logger输出内容
+    
 #### Requires
 
 *jdk1.8+ and spring boot*

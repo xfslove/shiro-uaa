@@ -10,15 +10,15 @@ import java.lang.reflect.Method;
 /**
  * Created by hanwen on 2020/11/24.
  */
-public class ShiroBizLoggerAdvisor extends StaticMethodMatcherPointcutAdvisor {
+public class BizLoggerAdvisor extends StaticMethodMatcherPointcutAdvisor {
 
-  public ShiroBizLoggerAdvisor(BizLoggerEntityStringifier bizLoggerEntityStringifier) {
-    setAdvice(new ShiroBizLoggerInterceptor(bizLoggerEntityStringifier, new SpringAnnotationResolver()));
+  public BizLoggerAdvisor(BizLoggerEntityStringifier bizLoggerEntityStringifier) {
+    setAdvice(new BizLoggerInterceptor(bizLoggerEntityStringifier, new SpringAnnotationResolver()));
   }
 
   @Override
   public boolean matches(Method method, Class<?> targetClass) {
-    ShiroBizLogger shiroBizLogger = AnnotationUtils.findAnnotation(method, ShiroBizLogger.class);
-    return shiroBizLogger != null;
+    BizLogger bizLogger = AnnotationUtils.findAnnotation(method, BizLogger.class);
+    return bizLogger != null;
   }
 }

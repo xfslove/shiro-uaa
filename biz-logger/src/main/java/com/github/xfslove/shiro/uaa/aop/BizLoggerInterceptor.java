@@ -18,14 +18,14 @@ import java.util.List;
 /**
  * Created by hanwen on 2020/11/24.
  */
-public class ShiroBizLoggerInterceptor extends AnnotationMethodInterceptor implements org.aopalliance.intercept.MethodInterceptor {
+public class BizLoggerInterceptor extends AnnotationMethodInterceptor implements org.aopalliance.intercept.MethodInterceptor {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(ShiroBizLoggerInterceptor.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(BizLoggerInterceptor.class);
 
   private final BizLoggerEntityStringifier bizLoggerEntityStringifier;
 
-  public ShiroBizLoggerInterceptor(BizLoggerEntityStringifier bizLoggerEntityStringifier, AnnotationResolver resolver) {
-    super(new ShiroBizLoggerAnnotationHandler(), resolver);
+  public BizLoggerInterceptor(BizLoggerEntityStringifier bizLoggerEntityStringifier, AnnotationResolver resolver) {
+    super(new BizLoggerAnnotationHandler(), resolver);
     this.bizLoggerEntityStringifier = bizLoggerEntityStringifier;
   }
 
@@ -63,11 +63,11 @@ public class ShiroBizLoggerInterceptor extends AnnotationMethodInterceptor imple
 
     Annotation annotation = getAnnotation(invocation);
 
-    if (!(annotation instanceof ShiroBizLogger)) {
+    if (!(annotation instanceof BizLogger)) {
       return invocation.proceed();
     }
 
-    ShiroBizLogger shiroLogging = (ShiroBizLogger) annotation;
+    BizLogger shiroLogging = (BizLogger) annotation;
 
     List<BizLoggerEntity> loggerEntities = new ArrayList<>();
 

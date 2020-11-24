@@ -1,6 +1,6 @@
 package com.github.xfslove.shiro.uaa;
 
-import com.github.xfslove.shiro.uaa.aop.ShiroBizLoggerAdvisor;
+import com.github.xfslove.shiro.uaa.aop.BizLoggerAdvisor;
 import com.github.xfslove.shiro.uaa.logger.DefaultBizLoggerEntityStringifier;
 import com.github.xfslove.shiro.uaa.logger.BizLoggerEntityStringifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -18,7 +18,7 @@ public class ShiroBizLoggerAutoConfiguration {
   }
 
   @Bean
-  public ShiroBizLoggerAdvisor shiroBizLoggerAdvisor(BizLoggerEntityStringifier bizLoggerEntityStringifier) {
-    return new ShiroBizLoggerAdvisor(bizLoggerEntityStringifier);
+  public BizLoggerAdvisor shiroBizLoggerAdvisor(BizLoggerEntityStringifier bizLoggerEntityStringifier) {
+    return new BizLoggerAdvisor(bizLoggerEntityStringifier);
   }
 }
