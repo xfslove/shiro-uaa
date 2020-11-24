@@ -8,15 +8,32 @@ import java.lang.annotation.Target;
 /**
  * Created by hanwen on 2020/11/24.
  */
-@Target({ElementType.TYPE, ElementType.METHOD})
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ShiroBizLogger {
 
+  /**
+   * @return logger name
+   */
+  String name() default "";
+
+  /**
+   * @return if log class name
+   */
   boolean className() default true;
 
+  /**
+   * @return if log method name
+   */
   boolean methodName() default true;
 
+  /**
+   * @return argument indies to log, but if has wrong indies will not log it.
+   */
   int[] argumentIndies() default {};
 
+  /**
+   * @return if log return value
+   */
   boolean returnValue() default false;
 }

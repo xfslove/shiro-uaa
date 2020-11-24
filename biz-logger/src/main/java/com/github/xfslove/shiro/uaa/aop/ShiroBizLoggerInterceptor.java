@@ -102,7 +102,7 @@ public class ShiroBizLoggerInterceptor extends AnnotationMethodInterceptor imple
 
     String principal = (String) SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
 
-    LOGGER.info("BIZ LOGGER INFO : {} access at {}.", principal, bizLoggerEntityStringifier.stringifier(loggerEntities));
+    LOGGER.info("BIZ LOGGER INFO : {} access {} at {}.", principal, shiroLogging.name(), bizLoggerEntityStringifier.stringifier(loggerEntities));
     return ret;
   }
 
