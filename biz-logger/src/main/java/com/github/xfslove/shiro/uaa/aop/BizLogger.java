@@ -13,9 +13,9 @@ import java.lang.annotation.Target;
 public @interface BizLogger {
 
   /**
-   * @return logger name
+   * @return logger remark
    */
-  String name() default "";
+  String remark() default "";
 
   /**
    * @return if log class name

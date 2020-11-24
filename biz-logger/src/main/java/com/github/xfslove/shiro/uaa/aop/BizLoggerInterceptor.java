@@ -67,25 +67,25 @@ public class BizLoggerInterceptor extends AnnotationMethodInterceptor implements
       return invocation.proceed();
     }
 
-    BizLogger shiroLogging = (BizLogger) annotation;
+    BizLogger bizLogger = (BizLogger) annotation;
 
     List<BizLoggerEntity> loggerEntities = new ArrayList<>();
 
-    if (shiroLogging.className()) {
+    if (bizLogger.className()) {
       loggerEntities.add(new BizLoggerEntity("class_name", invocation.getMethod().getDeclaringClass().getName()));
     }
 
-    if (shiroLogging.methodName()) {
+    if (bizLogger.methodName()) {
       loggerEntities.add(new BizLoggerEntity("method_name", invocation.getMethod().getName()));
     }
 
-    int indiesLength = shiroLogging.argumentIndies().length;
+    int indiesLength = bizLogger.argumentIndies().length;
     int argLength = invocation.getArguments().length;
     if (indiesLength > 0) {
-      Arrays.sort(shiroLogging.argumentIndies());
-      if (shiroLogging.argumentIndies()[indiesLength - 1] <= argLength) {
+      Arrays.sort(bizLogger.argumentIndies());
+      if (bizLogger.argumentIndies()[indiesLength - 1] <= argLength) {
         for (int i = 0; i < indiesLength; i++) {
-          int index = shiroLogging.argumentIndies()[i];
+          int index = bizLogger.argumentIndies()[i];
           Object argument = invocation.getArguments()[index - 1];
           loggerEntities.add(new BizLoggerEntity("argument_" + argument.getClass().getName(), argument));
         }
@@ -96,13 +96,13 @@ public class BizLoggerInterceptor extends AnnotationMethodInterceptor implements
 
     Object ret = invocation.proceed();
 
-    if (shiroLogging.returnValue()) {
+    if (bizLogger.returnValue()) {
       loggerEntities.add(new BizLoggerEntity("return", ret));
     }
 
     String principal = (String) SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
 
-    LOGGER.info("BIZ LOGGER INFO : {} access {} at {}.", principal, shiroLogging.name(), bizLoggerEntityStringifier.stringifier(loggerEntities));
+    LOGGER.info("BIZ LOGGER INFO : {} access at {}, remark: {}.", principal, bizLoggerEntityStringifier.stringifier(loggerEntities), bizLogger.remark());
     return ret;
   }
 
