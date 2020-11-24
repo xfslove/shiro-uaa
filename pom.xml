@@ -5,7 +5,7 @@
 
   <groupId>com.github.xfslove</groupId>
   <artifactId>shiro-uaa</artifactId>
-  <version>1.0.6</version>
+  <version>1.0.7-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Shiro-UAA</name>
   <description>A lightweight User Account and Authentication (UAA) Server base on Shiro.</description>
@@ -109,6 +109,7 @@
     <module>common</module>
     <module>resource-server</module>
     <module>auth-server</module>
+	<module>biz-logger</module>
   </modules>
 
   <dependencyManagement>

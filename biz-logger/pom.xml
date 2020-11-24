@@ -8,10 +8,10 @@
   </parent>
 
   <version>1.0.7-SNAPSHOT</version>
-  <artifactId>shiro-uaa-resource-server</artifactId>
+  <artifactId>shiro-uaa-biz-logger</artifactId>
   <packaging>jar</packaging>
-  <name>Shiro-UAA Resource Server</name>
-  <description>Shiro-UAA Resource Server</description>
+  <name>Shiro-UAA Biz Logger</name>
+  <description>Shiro-UAA Biz Logger</description>
   <url>https://github.com/xfslove/shiro-uaa</url>
 
   <dependencies>
