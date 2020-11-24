@@ -87,7 +87,7 @@ public class ShiroBizLoggerInterceptor extends AnnotationMethodInterceptor imple
         for (int i = 0; i < indiesLength; i++) {
           int index = shiroLogging.argumentIndies()[i];
           Object argument = invocation.getArguments()[index - 1];
-          loggerEntities.add(new BizLoggerEntity("argument_" + index, argument));
+          loggerEntities.add(new BizLoggerEntity("argument_" + argument.getClass().getName(), argument));
         }
       } else {
         LOGGER.warn("BIZ LOGGER INFO : can not logging arguments because of configured wrong argument indies.");
