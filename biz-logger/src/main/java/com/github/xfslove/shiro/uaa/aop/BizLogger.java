@@ -13,27 +13,34 @@ import java.lang.annotation.Target;
 public @interface BizLogger {
 
   /**
-   * @return logger remark
+   * @return if log subject name
    */
-  String remark() default "";
+  boolean subject() default true;
 
   /**
    * @return if log class name
    */
-  boolean className() default true;
+  boolean class_() default true;
 
   /**
    * @return if log method name
    */
-  boolean methodName() default true;
+  boolean method() default true;
 
   /**
+   * 1-base
+   *
    * @return argument indies to log, but if has wrong indies will not log it.
    */
-  int[] argumentIndies() default {};
+  int[] arguments() default {};
 
   /**
    * @return if log return value
    */
-  boolean returnValue() default false;
+  boolean return_() default false;
+
+  /**
+   * @return logger remark
+   */
+  String remark() default "";
 }
