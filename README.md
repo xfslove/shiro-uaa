@@ -149,15 +149,16 @@ A lightweight User Account and Authentication (UAA) Server base on Shiro.
   | 注解方法                               | 说明                    |
   | ------------------------------------ | ----------------------- |
   | remark      | 备注，默认：""              |
-  | className      | 是否记录类名，默认：true              |
-  | methodName        | 是否记录方法名，默认：true           |
-  | argumentIndies        | 需要记录参数的索引，默认：{}     |
-  | returnValue | 是否记录返回值，默认：false                     |
+  | class_     | 是否记录类名，默认：true              |
+  | method        | 是否记录方法名，默认：true           |
+  | arguments        | 需要记录参数的索引，默认：{}     |
+  | return_ | 是否记录返回值，默认：false                     |
+  | subject | 是否记录用户名，默认：true |
   
   ##### BizLoggerEntityStringifier
   
   implement `BizLoggerEntityStringifier` ，自定义logger输出内容
-    
+  
 #### Requires
 
 *jdk1.8+ and spring boot*
