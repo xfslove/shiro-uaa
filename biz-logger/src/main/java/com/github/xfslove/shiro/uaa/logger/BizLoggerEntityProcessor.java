@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by hanwen on 2020/11/24.
  */
-public interface BizLoggerEntityStringifier {
+public interface BizLoggerEntityProcessor {
 
-  String stringifier(List<BizLoggerEntity> entityList);
+  void process(List<BizLoggerEntity> entityList);
 }

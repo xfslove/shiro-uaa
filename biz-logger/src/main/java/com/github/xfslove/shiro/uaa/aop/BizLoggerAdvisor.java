@@ -1,6 +1,6 @@
 package com.github.xfslove.shiro.uaa.aop;
 
-import com.github.xfslove.shiro.uaa.logger.BizLoggerEntityStringifier;
+import com.github.xfslove.shiro.uaa.logger.BizLoggerEntityProcessor;
 import org.apache.shiro.spring.aop.SpringAnnotationResolver;
 import org.springframework.aop.support.StaticMethodMatcherPointcutAdvisor;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -12,8 +12,8 @@ import java.lang.reflect.Method;
  */
 public class BizLoggerAdvisor extends StaticMethodMatcherPointcutAdvisor {
 
-  public BizLoggerAdvisor(BizLoggerEntityStringifier bizLoggerEntityStringifier) {
-    setAdvice(new BizLoggerInterceptor(bizLoggerEntityStringifier, new SpringAnnotationResolver()));
+  public BizLoggerAdvisor(BizLoggerEntityProcessor bizLoggerEntityProcessor) {
+    setAdvice(new BizLoggerInterceptor(bizLoggerEntityProcessor, new SpringAnnotationResolver()));
   }
 
   @Override

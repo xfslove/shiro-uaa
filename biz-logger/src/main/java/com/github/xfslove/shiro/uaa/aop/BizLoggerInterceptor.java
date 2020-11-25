@@ -1,7 +1,7 @@
 package com.github.xfslove.shiro.uaa.aop;
 
 import com.github.xfslove.shiro.uaa.logger.BizLoggerEntity;
-import com.github.xfslove.shiro.uaa.logger.BizLoggerEntityStringifier;
+import com.github.xfslove.shiro.uaa.logger.BizLoggerEntityProcessor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.aop.AnnotationMethodInterceptor;
@@ -24,11 +24,11 @@ public class BizLoggerInterceptor extends AnnotationMethodInterceptor implements
 
   private static final Logger LOGGER = LoggerFactory.getLogger(BizLoggerInterceptor.class);
 
-  private final BizLoggerEntityStringifier bizLoggerEntityStringifier;
+  private final BizLoggerEntityProcessor bizLoggerEntityProcessor;
 
-  public BizLoggerInterceptor(BizLoggerEntityStringifier bizLoggerEntityStringifier, AnnotationResolver resolver) {
+  public BizLoggerInterceptor(BizLoggerEntityProcessor bizLoggerEntityProcessor, AnnotationResolver resolver) {
     super(new BizLoggerAnnotationHandler(), resolver);
-    this.bizLoggerEntityStringifier = bizLoggerEntityStringifier;
+    this.bizLoggerEntityProcessor = bizLoggerEntityProcessor;
   }
 
   @Override
@@ -71,19 +71,19 @@ public class BizLoggerInterceptor extends AnnotationMethodInterceptor implements
 
     BizLogger bizLogger = (BizLogger) annotation;
 
-    List<BizLoggerEntity> loggerEntities = new ArrayList<>();
+    List<BizLoggerEntity> loggerEntityList = new ArrayList<>();
 
     Subject subject = SecurityUtils.getSubject();
     if (bizLogger.subject() && subject.isAuthenticated()) {
-      loggerEntities.add(new BizLoggerEntity("subject", subject.getPrincipals().getPrimaryPrincipal()));
+      loggerEntityList.add(new BizLoggerEntity("subject", subject.getPrincipals().getPrimaryPrincipal()));
     }
 
     if (bizLogger.class_()) {
-      loggerEntities.add(new BizLoggerEntity("class_", invocation.getMethod().getDeclaringClass().getName()));
+      loggerEntityList.add(new BizLoggerEntity("class_", invocation.getMethod().getDeclaringClass().getName()));
     }
 
     if (bizLogger.method()) {
-      loggerEntities.add(new BizLoggerEntity("method", invocation.getMethod().getName()));
+      loggerEntityList.add(new BizLoggerEntity("method", invocation.getMethod().getName()));
     }
 
     int indiesLength = bizLogger.arguments().length;
@@ -94,7 +94,7 @@ public class BizLoggerInterceptor extends AnnotationMethodInterceptor implements
         for (int i = 0; i < indiesLength; i++) {
           int index = bizLogger.arguments()[i];
           Object argument = invocation.getArguments()[index - 1];
-          loggerEntities.add(new BizLoggerEntity("argument_" + argument.getClass().getName(), argument));
+          loggerEntityList.add(new BizLoggerEntity("argument_" + argument.getClass().getName(), argument));
         }
       } else {
         LOGGER.warn("BIZ LOGGER INFO : can not logging arguments because of configured wrong argument indies.");
@@ -102,18 +102,18 @@ public class BizLoggerInterceptor extends AnnotationMethodInterceptor implements
     }
 
     if (StringUtils.isNotBlank(bizLogger.remark())) {
-      loggerEntities.add(new BizLoggerEntity("remark", bizLogger.remark()));
+      loggerEntityList.add(new BizLoggerEntity("remark", bizLogger.remark()));
     }
 
     try {
       Object ret = invocation.proceed();
       if (bizLogger.return_()) {
-        loggerEntities.add(new BizLoggerEntity("return_", ret));
+        loggerEntityList.add(new BizLoggerEntity("return_", ret));
       }
       return ret;
     } finally {
 
-      LOGGER.info("BIZ LOGGER INFO : {}.", bizLoggerEntityStringifier.stringifier(loggerEntities));
+      bizLoggerEntityProcessor.process(loggerEntityList);
     }
   }
 
