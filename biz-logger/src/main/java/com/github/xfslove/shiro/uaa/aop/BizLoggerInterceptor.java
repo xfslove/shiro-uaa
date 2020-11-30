@@ -78,26 +78,22 @@ public class BizLoggerInterceptor extends AnnotationMethodInterceptor implements
       loggerEntityList.add(new BizLoggerEntity("subject", subject.getPrincipals().getPrimaryPrincipal()));
     }
 
+    Method method = invocation.getMethod();
     if (bizLogger.class_()) {
-      loggerEntityList.add(new BizLoggerEntity("class_", invocation.getMethod().getDeclaringClass().getName()));
+      loggerEntityList.add(new BizLoggerEntity("class_", method.getDeclaringClass().getName()));
     }
 
     if (bizLogger.method()) {
-      loggerEntityList.add(new BizLoggerEntity("method", invocation.getMethod().getName()));
+      loggerEntityList.add(new BizLoggerEntity("method", method.getName()));
     }
 
-    int indiesLength = bizLogger.arguments().length;
-    int argLength = invocation.getArguments().length;
-    if (indiesLength > 0) {
-      Arrays.sort(bizLogger.arguments());
-      if (bizLogger.arguments()[indiesLength - 1] <= argLength) {
-        for (int i = 0; i < indiesLength; i++) {
-          int index = bizLogger.arguments()[i];
-          Object argument = invocation.getArguments()[index - 1];
-          loggerEntityList.add(new BizLoggerEntity("argument_" + argument.getClass().getName(), argument));
-        }
+    for (int i = 0; i < bizLogger.arguments().length; i++) {
+      int index = bizLogger.arguments()[i];
+      if (index > method.getParameterTypes().length) {
+        LOGGER.warn("BIZ LOGGER INFO : can not logging arguments because of configured wrong argument indies[{}].", index);
       } else {
-        LOGGER.warn("BIZ LOGGER INFO : can not logging arguments because of configured wrong argument indies.");
+        Class<?> argumentClass = method.getParameterTypes()[index - 1];
+        loggerEntityList.add(new BizLoggerEntity("argument_" + argumentClass.getName(), invocation.getArguments()[index - 1]));
       }
     }
 
