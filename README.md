@@ -64,6 +64,10 @@ A lightweight User Account and Authentication (UAA) Server base on Shiro.
 
   自定义Login页面和登录验证，implement `org.apache.shiro.authc.credential.CredentialsMatcher` ，实现登录时的校验逻辑，配置`shiro.loginUrl`
 
+  ##### forwardError
+
+  默认情况下，当Server出现OAuthProblem的时候，会带着错误信息跳转到Resource的地址(redirect_uri参数)，如果配置了forwardErrorUrl则不会重定向而显示错误页面，页面需要自定义，配置`shiro.uaa.server.forwardErrorUrl`, 此配置的目的是防止使用Server做非正常跳转
+
   ##### 扩展的配置参数
 
   | 参数名                                  | 说明                                                         |
@@ -81,6 +85,7 @@ A lightweight User Account and Authentication (UAA) Server base on Shiro.
   | shiro.uaa.server.accounts[].username    | 账号登录名，使用默认内存AccountService时有效                 |
   | shiro.uaa.server.accounts[].password    | 账号密码，使用默认内存AccountService时有效                   |
   | shiro.uaa.server.accounts[].roles[]     | 账号拥有角色，使用默认内存AccountService时有效               |
+  | shiro.uaa.server.forwardErrorUrl        | 自定义OAuthProblem Error地址                            |
 
 - resource-server
 
