@@ -6,6 +6,7 @@ import com.github.xfslove.shiro.uaa.model.AuthCode;
 import com.github.xfslove.shiro.uaa.model.Constants;
 import com.github.xfslove.shiro.uaa.service.AccessClientService;
 import com.github.xfslove.shiro.uaa.service.AuthCodeService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuerImpl;
 import org.apache.oltu.oauth2.as.issuer.UUIDValueGenerator;
 import org.apache.oltu.oauth2.as.request.OAuthAuthzRequest;
@@ -45,6 +46,8 @@ public class UaaAuthenticationEndpoint {
 
   private Long codeExpires;
 
+  private String forwardErrorUrl;
+
   @RequestMapping(value = "", method = RequestMethod.GET)
   public ModelAndView index(
       ModelAndView modelAndView,
@@ -80,18 +83,26 @@ public class UaaAuthenticationEndpoint {
       modelAndView.setViewName("forward:" + loginUrl);
       return modelAndView;
     } catch (OAuthProblemException e) {
-      OAuthResponse resp = OAuthASResponse
-          .errorResponse(HttpServletResponse.SC_FOUND)
-          .error(e)
-          .location(redirectURL)
-          .buildQueryMessage();
-      response.sendRedirect(resp.getLocationUri());
-      return null;
+
+      if (StringUtils.isBlank(forwardErrorUrl)) {
+
+        OAuthResponse resp = OAuthASResponse
+            .errorResponse(HttpServletResponse.SC_FOUND)
+            .error(e)
+            .location(redirectURL)
+            .buildQueryMessage();
+        response.sendRedirect(resp.getLocationUri());
+        return null;
+      } else {
+        modelAndView.setViewName("forward:" + forwardErrorUrl);
+        return modelAndView;
+      }
     }
   }
 
   @RequestMapping(value = "/approve", method = RequestMethod.GET)
-  public void approve(
+  public ModelAndView approve(
+      ModelAndView modelAndView,
       HttpServletRequest request,
       HttpServletResponse response,
       @RequestParam(OAuth.OAUTH_REDIRECT_URI) String redirectURL
@@ -137,13 +148,22 @@ public class UaaAuthenticationEndpoint {
 
       LOGGER.info("UAA SERVER INFO : {} get auth_code success from server, issued client_id:[{}], redirect to {}", account.getUsername(), accessClient.getClientId(), redirectUrl);
       response.sendRedirect(redirectUrl);
+      return null;
     } catch (OAuthProblemException ex) {
-      OAuthResponse resp = OAuthASResponse
-          .errorResponse(HttpServletResponse.SC_FOUND)
-          .error(ex)
-          .location(redirectURL)
-          .buildQueryMessage();
-      response.sendRedirect(resp.getLocationUri());
+
+      if (StringUtils.isBlank(forwardErrorUrl)) {
+
+        OAuthResponse resp = OAuthASResponse
+            .errorResponse(HttpServletResponse.SC_FOUND)
+            .error(ex)
+            .location(redirectURL)
+            .buildQueryMessage();
+        response.sendRedirect(resp.getLocationUri());
+        return null;
+      } else {
+        modelAndView.setViewName("forward:" + forwardErrorUrl);
+        return modelAndView;
+      }
     }
   }
 
@@ -161,5 +181,9 @@ public class UaaAuthenticationEndpoint {
 
   public void setCodeExpires(Long codeExpires) {
     this.codeExpires = codeExpires;
+  }
+
+  public void setForwardErrorUrl(String forwardErrorUrl) {
+    this.forwardErrorUrl = forwardErrorUrl;
   }
 }

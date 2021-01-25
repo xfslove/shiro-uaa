@@ -38,6 +38,7 @@ public class AuthServerEndpointAutoConfiguration {
   @Bean
   public UaaAuthenticationEndpoint uaaAuthorizeEndpoint(ApplicationContext applicationContext, AuthServerProperties serverProperties) {
     UaaAuthenticationEndpoint uaaAuthenticationEndpoint = new UaaAuthenticationEndpoint();
+    uaaAuthenticationEndpoint.setForwardErrorUrl(serverProperties.getForwardErrorUrl());
     uaaAuthenticationEndpoint.setLoginUrl(loginUrl);
     uaaAuthenticationEndpoint.setCodeExpires(serverProperties.getCodeExpires());
     uaaAuthenticationEndpoint.setAccessClientService(applicationContext.getBean(AccessClientService.class));
@@ -46,8 +47,9 @@ public class AuthServerEndpointAutoConfiguration {
   }
 
   @Bean
-  public UaaLogoutEndpoint uaaLogoutEndpoint(ApplicationContext applicationContext) {
+  public UaaLogoutEndpoint uaaLogoutEndpoint(ApplicationContext applicationContext, AuthServerProperties serverProperties) {
     UaaLogoutEndpoint uaaLogoutEndpoint = new UaaLogoutEndpoint();
+    uaaLogoutEndpoint.setForwardErrorUrl(serverProperties.getForwardErrorUrl());
     uaaLogoutEndpoint.setAccessClientService(applicationContext.getBean(AccessClientService.class));
     uaaLogoutEndpoint.setAccessTokenService(applicationContext.getBean(AccessTokenService.class));
     return uaaLogoutEndpoint;

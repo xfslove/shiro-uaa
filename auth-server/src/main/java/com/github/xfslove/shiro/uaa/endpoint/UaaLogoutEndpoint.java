@@ -5,6 +5,7 @@ import com.github.xfslove.shiro.uaa.model.AccessToken;
 import com.github.xfslove.shiro.uaa.model.Constants;
 import com.github.xfslove.shiro.uaa.service.AccessClientService;
 import com.github.xfslove.shiro.uaa.service.AccessTokenService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.oltu.oauth2.as.response.OAuthASResponse;
 import org.apache.oltu.oauth2.common.OAuth;
 import org.apache.oltu.oauth2.common.error.OAuthError;
@@ -18,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -35,8 +37,11 @@ public class UaaLogoutEndpoint {
 
   private AccessTokenService accessTokenService;
 
+  private String forwardErrorUrl;
+
   @RequestMapping(value = "", method = RequestMethod.GET)
-  public void logout(
+  public ModelAndView logout(
+      ModelAndView modelAndView,
       @RequestParam(OAuth.OAUTH_CLIENT_ID) String clientId,
       @RequestParam(OAuth.OAUTH_REDIRECT_URI) String redirectURL,
       HttpServletResponse response
@@ -54,7 +59,7 @@ public class UaaLogoutEndpoint {
       Subject subject = SecurityUtils.getSubject();
       if (!subject.isAuthenticated()) {
         response.sendRedirect(redirectURL);
-        return;
+        return null;
       }
 
       List<AccessToken> tokens = accessTokenService.getBySession((String) subject.getSession(false).getId());
@@ -67,14 +72,22 @@ public class UaaLogoutEndpoint {
       LOGGER.info("UAA SERVER INFO : {} logout success from server, issued client_id:[{}]", username, clientId);
 
       response.sendRedirect(redirectURL);
+      return null;
     } catch (OAuthProblemException ex) {
 
-      OAuthResponse resp = OAuthASResponse
-          .errorResponse(HttpServletResponse.SC_FOUND)
-          .error(ex)
-          .location(redirectURL)
-          .buildQueryMessage();
-      response.sendRedirect(resp.getLocationUri());
+      if (StringUtils.isBlank(forwardErrorUrl)) {
+
+        OAuthResponse resp = OAuthASResponse
+            .errorResponse(HttpServletResponse.SC_FOUND)
+            .error(ex)
+            .location(redirectURL)
+            .buildQueryMessage();
+        response.sendRedirect(resp.getLocationUri());
+        return null;
+      } else {
+        modelAndView.setViewName("forward:" + forwardErrorUrl);
+        return modelAndView;
+      }
     }
   }
 
@@ -84,5 +97,9 @@ public class UaaLogoutEndpoint {
 
   public void setAccessTokenService(AccessTokenService accessTokenService) {
     this.accessTokenService = accessTokenService;
+  }
+
+  public void setForwardErrorUrl(String forwardErrorUrl) {
+    this.forwardErrorUrl = forwardErrorUrl;
   }
 }

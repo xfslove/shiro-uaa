@@ -31,6 +31,8 @@ public class AuthServerProperties {
 
   private List<Account> accounts;
 
+  private String forwardErrorUrl;
+
   public Long getAccessTokenExpires() {
     return accessTokenExpires;
   }
@@ -77,6 +79,14 @@ public class AuthServerProperties {
 
   public void setAccounts(List<Account> accounts) {
     this.accounts = accounts;
+  }
+
+  public String getForwardErrorUrl() {
+    return forwardErrorUrl;
+  }
+
+  public void setForwardErrorUrl(String forwardErrorUrl) {
+    this.forwardErrorUrl = forwardErrorUrl;
   }
 
   public static class AccessClient {
