@@ -85,6 +85,8 @@ public class UaaLogoutEndpoint {
         response.sendRedirect(resp.getLocationUri());
         return null;
       } else {
+
+        modelAndView.addObject("error", ex);
         modelAndView.setViewName("forward:" + forwardErrorUrl);
         return modelAndView;
       }

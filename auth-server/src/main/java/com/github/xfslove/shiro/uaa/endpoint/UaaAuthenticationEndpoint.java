@@ -94,6 +94,8 @@ public class UaaAuthenticationEndpoint {
         response.sendRedirect(resp.getLocationUri());
         return null;
       } else {
+
+        modelAndView.addObject("error", e);
         modelAndView.setViewName("forward:" + forwardErrorUrl);
         return modelAndView;
       }
@@ -161,6 +163,8 @@ public class UaaAuthenticationEndpoint {
         response.sendRedirect(resp.getLocationUri());
         return null;
       } else {
+
+        modelAndView.addObject("error", ex);
         modelAndView.setViewName("forward:" + forwardErrorUrl);
         return modelAndView;
       }
